@@ -26,11 +26,13 @@ func NewService(i time.Duration) (*Service, error) {
 	return &svc, nil
 }
 
-func (s *Service) Serve() {
+func (s *Service) Serve() error {
 	for {
 		s.timer = time.NewTimer(s.interval)
 		<-s.timer.C // Will block current goroutine.
 
 		notify.SigBeep.SendAsync(nil)
 	}
+
+	return nil
 }
