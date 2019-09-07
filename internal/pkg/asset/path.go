@@ -6,14 +6,12 @@ import (
 	"strings"
 )
 
-
 const (
 	UserHomeDirFlag = "~"
 )
 
-
 func ExpandUserDir(i string) string {
-	if ! strings.HasPrefix(i, UserHomeDirFlag) {
+	if !strings.HasPrefix(i, UserHomeDirFlag) {
 		return i
 	}
 
@@ -24,7 +22,7 @@ func ExpandUserDir(i string) string {
 		return i
 	}
 
-	i = i[1:]  // Remove prefix.
+	i = i[1:] // Remove prefix.
 	i = path.Join(userDir, i)
 
 	return i

@@ -7,7 +7,6 @@ import (
 	"sync"
 )
 
-
 const (
 	SignalExitSuccess = 0
 	SignalExitFailure = 1
@@ -16,27 +15,25 @@ const (
 type SignalHandler func(ISignal, ...interface{})
 
 type ISignal interface {
-	Send(args...interface{})
-	SendAsync(wait chan int, args...interface{})
+	Send(args ...interface{})
+	SendAsync(wait chan int, args ...interface{})
 	Connect(handler SignalHandler)
 }
 
-
 type Signal struct {
-	name        string
-	mutex       sync.Mutex
+	name  string
+	mutex sync.Mutex
 
 	// Use map to avoid duplications.
-	receivers 	map[string]SignalHandler
-	numRecv		int
+	receivers map[string]SignalHandler
+	numRecv   int
 }
 
-
-func NewSignal(name string, handlers...SignalHandler) *Signal {
+func NewSignal(name string, handlers ...SignalHandler) *Signal {
 	s := Signal{
-		name: name,
+		name:      name,
 		receivers: make(map[string]SignalHandler),
-		numRecv: 0,
+		numRecv:   0,
 	}
 
 	for _, h := range handlers {
@@ -63,7 +60,7 @@ func (s *Signal) Connect(handler SignalHandler) {
 	s.mutex.Unlock()
 }
 
-func (s *Signal) Send(args...interface{}) {
+func (s *Signal) Send(args ...interface{}) {
 	s.mutex.Lock()
 	defer s.recover(s.name, nil)
 
@@ -73,7 +70,7 @@ func (s *Signal) Send(args...interface{}) {
 	s.mutex.Unlock()
 }
 
-func (s *Signal) SendAsync(wait chan int, args...interface{}) {
+func (s *Signal) SendAsync(wait chan int, args ...interface{}) {
 	s.mutex.Lock()
 	for n, h := range s.receivers {
 		go func() {
@@ -87,7 +84,6 @@ func (s *Signal) SendAsync(wait chan int, args...interface{}) {
 	}
 	s.mutex.Unlock()
 }
-
 
 func (s *Signal) getHandlerName(h SignalHandler) string {
 	return runtime.FuncForPC(reflect.ValueOf(h).Pointer()).Name()

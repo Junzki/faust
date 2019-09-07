@@ -9,7 +9,6 @@ import (
 func Dispatch(c *Context) {
 	m := c.Update.Message
 
-
 	if m.IsCommand() {
 		handleCommand(c)
 		return
@@ -18,9 +17,8 @@ func Dispatch(c *Context) {
 	return
 }
 
-
 const (
-	CommandAloha		   = "aloha"
+	CommandAloha           = "aloha"
 	CommandSubscribeBeep   = "set_beep"
 	CommandUnsubscribeBeep = "unset_beep"
 )
@@ -35,15 +33,12 @@ func handleCommand(c *Context) {
 	case CommandSubscribeBeep, CommandUnsubscribeBeep:
 		handleBeepSubscribe(c, op)
 
-
 	default:
 		return
 	}
 
-
 	_, _ = c.GetBot().Send(rep)
 }
-
 
 func handleBeepSubscribe(c *Context, op string) {
 	var err error = nil
@@ -66,5 +61,3 @@ func handleBeepSubscribe(c *Context, op string) {
 
 	_, _ = c.GetBot().Send(rep)
 }
-
-

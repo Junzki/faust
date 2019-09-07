@@ -8,20 +8,19 @@ import (
 )
 
 var toggleChecker struct {
-	Mutex  sync.Mutex
-	Flag   int
+	Mutex sync.Mutex
+	Flag  int
 }
 
-func noopHandler(_ ISignal, _...interface{}) {
+func noopHandler(_ ISignal, _ ...interface{}) {
 	toggleChecker.Mutex.Lock()
 	toggleChecker.Flag++
 	toggleChecker.Mutex.Unlock()
 }
 
-func panicHandler(_ ISignal, _...interface{}) {
+func panicHandler(_ ISignal, _ ...interface{}) {
 	panic("error!")
 }
-
 
 func TestNewSignal(t *testing.T) {
 	s := NewSignal("fake-signal", noopHandler)
@@ -32,7 +31,6 @@ func TestNewSignal(t *testing.T) {
 	s2 := NewSignal("empty-signal")
 	assert.Equal(t, 0, s2.numRecv)
 }
-
 
 func TestSignal_Connect(t *testing.T) {
 	s := NewSignal("fake-signal")
@@ -66,7 +64,7 @@ func TestSignal_SendAsync(t *testing.T) {
 	w := make(chan int)
 
 	s.SendAsync(w)
-	ret := <- w
+	ret := <-w
 
 	assert.Equal(t, 1, toggleChecker.Flag)
 	assert.Equal(t, SignalExitSuccess, ret)
@@ -85,7 +83,7 @@ func TestSignal_SendPanicAsync(t *testing.T) {
 	w := make(chan int)
 
 	s.SendAsync(w)
-	ret := <- w
+	ret := <-w
 
 	assert.Equal(t, SignalExitFailure, ret)
 }

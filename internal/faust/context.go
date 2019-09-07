@@ -6,7 +6,6 @@ import (
 	"time"
 )
 
-
 func NewContext(b *tgbotapi.BotAPI, u *tgbotapi.Update) (*Context, error) {
 	if nil == u || nil == b {
 		return nil, errors.New("required arg is nil")
@@ -14,18 +13,16 @@ func NewContext(b *tgbotapi.BotAPI, u *tgbotapi.Update) (*Context, error) {
 
 	c := Context{
 		Update: u,
-		bot: b,
+		bot:    b,
 	}
 
 	return &c, nil
 }
 
-
 type Context struct {
 	Update *tgbotapi.Update
 	bot    *tgbotapi.BotAPI
 }
-
 
 // GetBot returns referenced BotAPI instance.
 func (c *Context) GetBot() *tgbotapi.BotAPI {
@@ -36,12 +33,9 @@ func (c *Context) GetBot() *tgbotapi.BotAPI {
 	return c.bot
 }
 
-
-
 /************************************/
 /***** GOLANG.ORG/X/NET/CONTEXT *****/
 /************************************/
-
 
 func (c *Context) Err() error {
 	return nil

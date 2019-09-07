@@ -65,11 +65,9 @@ func (s Server) Serve() error {
 	return nil
 }
 
-
 func (s Server) RegisterSignal() {
 	notify.SigBeep.Connect(HandleBeepNotify)
 }
-
 
 func GetSvc() *Server {
 	if nil != svc {

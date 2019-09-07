@@ -11,12 +11,10 @@ import (
 	"os"
 )
 
-
 var (
-	configFile	string
-	g errgroup.Group
+	configFile string
+	g          errgroup.Group
 )
-
 
 func loadFlags() {
 	flag.StringVar(&configFile, "c", "", "Path to config file.")

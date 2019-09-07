@@ -7,11 +7,10 @@ import (
 	"os"
 )
 
-
 type Config struct {
-	DebugMode	bool		`yaml:"debug"`
-	Token		string		`yaml:"token"`
-	Timeout     int         `yaml:"timeout"`
+	DebugMode bool   `yaml:"debug"`
+	Token     string `yaml:"token"`
+	Timeout   int    `yaml:"timeout"`
 }
 
 func (c *Config) UpdateFromBytes(content []byte) error {
@@ -36,12 +35,10 @@ func (c *Config) UpdateFromFile(file *os.File) error {
 	return c.UpdateFromBytes(content)
 }
 
-
 var config = &Config{
 	DebugMode: false,
-	Timeout: 60,
+	Timeout:   60,
 }
-
 
 func GetConfig() *Config {
 	return config

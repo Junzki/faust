@@ -9,10 +9,9 @@ const (
 	DefaultTimeInterval = time.Duration(60 * time.Second)
 )
 
-
 type Service struct {
-	interval	time.Duration
-	timer       *time.Timer
+	interval time.Duration
+	timer    *time.Timer
 }
 
 func NewService(i time.Duration) (*Service, error) {
@@ -27,16 +26,11 @@ func NewService(i time.Duration) (*Service, error) {
 	return &svc, nil
 }
 
-
-func (s *Service) Serve() error {
+func (s *Service) Serve() {
 	for {
 		s.timer = time.NewTimer(s.interval)
-		<-s.timer.C  // Will block current goroutine.
+		<-s.timer.C // Will block current goroutine.
 
 		notify.SigBeep.SendAsync(nil)
 	}
-
-	return nil
 }
-
-

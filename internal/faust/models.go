@@ -7,8 +7,7 @@ import (
 	"sync"
 )
 
-
-type SubscriberMap map[int64] *tgbotapi.Chat
+type SubscriberMap map[int64]*tgbotapi.Chat
 
 type SubscriberContainer struct {
 	m     SubscriberMap
@@ -38,7 +37,7 @@ func (s *SubscriberContainer) Unsubscribe(id int64) error {
 	s.mutex.Lock()
 
 	_, existed := s.m[id]
-	if ! existed {
+	if !existed {
 		s.mutex.Unlock()
 		return errors.New("not subscribed")
 	}
@@ -63,8 +62,8 @@ func (s *SubscriberContainer) Broadcast(bot *tgbotapi.BotAPI, text string) error
 	return nil
 }
 
-
 var (
 	BeepSubscriber = SubscriberContainer{
 		m: make(SubscriberMap),
-	})
+	}
+)
