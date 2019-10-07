@@ -3,6 +3,7 @@ module faust
 go 1.12
 
 require (
+	github.com/aws/aws-sdk-go v1.25.6 // indirect
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/sirupsen/logrus v1.4.2
 	github.com/stretchr/testify v1.4.0
